@@ -1,5 +1,6 @@
 --[[
 	Room module by Superhos v1.0
+	License is Creative Commons 0.
 ]]--
 
 require "smath"
@@ -9,25 +10,25 @@ require "smath"
 function Room()
 	return {
 		objects = {},
-		objs = 0
+		objs = 0 -- Amount of objects
 	}
 end
 
---A room that can be graphically manipulated (and with scrolling!)
+--A room that can be graphically manipulated
 function MRoom(sw, sh, w, h, x, y, rot, sx, sy)
 	return {
 		objects = {},
 		objs = 0,
-		canvas = love.graphics.newCanvas(w, h),
-		sw = sw,
-		sh = sh,
-		w = w,
-		h = h,
-		x = x,
-		y = y,
-		rot = rot,
-		sx = sx,
-		sy = sy
+		canvas = love.graphics.newCanvas(w, h), -- The canvas used for rendering
+		sw = sw, -- ?
+		sh = sh, -- ?
+		w = w, -- Width of canvas
+		h = h, -- Height of canvas
+		x = x, -- Translation in X
+		y = y, -- Translation in Y
+		rot = rot, -- Rotation
+		sx = sx, -- Scaling in X
+		sy = sy -- Scaling in Y
 	}
 end
 
@@ -36,13 +37,16 @@ end
 	code are added to the start of the update method:
 	sx = x + room.x
 	sy = y + room.y
+
+   This catch is easily fixed by making the room execute a custom update function on every object before executing
+   the main update function
 ]]--
 function Object(x, y, sx, sy, r)
 	return {
 		x = x,
 		y = y,
-		sx = sx,
-		sy = sy,
+		sx = sx, -- Absolute X
+		sy = sy, -- Absolute Y
 		room = r
 	}
 end
@@ -74,7 +78,7 @@ function AddObjToRoom(room, obj)
 	room.objs = room.objs + 1
 end
 
-AOTR = AddObjToRoom
+AOTR = AddObjToRoom -- Short hand for the function
 
 --Update all the objects of the room
 function UpdateRoom(room)
@@ -90,7 +94,7 @@ function DrawRoom(room)
 	end
 end
 
---Draw all the objects of the room with a global translation, rotation and scaling (for scrolling!)
+--Draw all the objects of the room with a global translation, rotation and scaling.
 function DrawManipulatedRoom(r)
 
 	--Using a canvas to buffer an image
